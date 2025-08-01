@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Will You Be Mine? 💖</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: black;
+      overflow: hidden;
+      height: 100%;
+      font-family: 'Segoe UI', sans-serif;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      text-align: center;
+    }
+
+    canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    .box {
+      width: 100px;
+      height: 60px;
+      background: #444;
+      position: relative;
+      border-radius: 10px;
+      margin-top: 20px;
+      animation: popUp 2s ease forwards;
+      transform: translateY(200px);
+      z-index: 3;
+    }
+
+    .ring {
+      width: 60px;
+      height: 60px;
+      border: 6px solid gold;
+      border-radius: 50%;
+      position: absolute;
+      top: -40px;
+      left: 18px;
+      opacity: 0;
+      animation: ringUp 2s 1.5s ease forwards;
+      box-shadow: 0 0 20px gold;
+    }
+
+    .diamond {
+      width: 20px;
+      height: 20px;
+      background: cyan;
+      position: absolute;
+      top: -15px;
+      left: 18px;
+      transform: rotate(45deg);
+      box-shadow: 0 0 10px cyan;
+    }
+
+    @keyframes ringUp {
+      0% {
+        transform: translateY(50px);
+        opacity: 0;
+      }
+      100% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    @keyframes popUp {
+      to {
+        transform: translateY(0);
+      }
+    }
+
+    .text {
+      margin-top: 200px;
+      font-size: 1.5em;
+      max-width: 90%;
+      opacity: 0;
+      animation: fadeInText 2s 3s ease forwards;
+      z-index: 3;
+    }
+
+    @keyframes fadeInText {
+      to {
+        opacity: 1;
+      }
+    }
+
+    .buttons {
+      margin-top: 20px;
+      display: flex;
+      gap: 20px;
+      opacity: 0;
+      animation: fadeInButtons 2s 4.5s ease forwards;
+      z-index: 3;
+    }
+
+    .btn {
+      padding: 12px 24px;
+      border: none;
+      border-radius: 30px;
+      font-size: 1em;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .btn-yes {
+      background: pink;
+      color: black;
+    }
+
+    .btn-yes:hover {
+      background: hotpink;
+      transform: scale(1.1);
+    }
+
+    .btn-no {
+      background: #666;
+      color: white;
+    }
+
+    .btn-no:hover {
+      background: #999;
+      transform: scale(1.1);
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="starsCanvas"></canvas>
+<canvas id="heartCanvas"></canvas>
+
+<div class="box">
+  <div class="ring">
+    <div class="diamond"></div>
+  </div>
+</div>
+
+<div class="text">
+  “Will you be my last girlfriend?<br>I want to spend my whole life with you, wifey.” 
+<p><b><i> Answer on IG Wifey</b></i> </p>
+</div>
+
+<div class="buttons">
+  <button class="btn btn-yes">Yes, of course 💍</button>
+  <button class="btn btn-no">Not now 😔</button>
+</div>
+
+<script>
+  // STAR PARTICLES BACKGROUND
+  const starsCanvas = document.getElementById("starsCanvas");
+  const starsCtx = starsCanvas.getContext("2d");
+  starsCanvas.width = window.innerWidth;
+  starsCanvas.height = window.innerHeight;
+
+  let stars = [];
+
+  for (let i = 0; i < 150; i++) {
+    stars.push({
+      x: Math.random() * starsCanvas.width,
+      y: Math.random() * starsCanvas.height,
+      radius: Math.random() * 1.5,
+      speed: Math.random() * 0.5 + 0.2
+    });
+  }
+
+  function animateStars() {
+    starsCtx.clearRect(0, 0, starsCanvas.width, starsCanvas.height);
+    starsCtx.fillStyle = "white";
+    for (let star of stars) {
+      starsCtx.beginPath();
+      starsCtx.arc(star.x, star.y, star.radius, 0, 2 * Math.PI);
+      starsCtx.fill();
+      star.y += star.speed;
+      if (star.y > starsCanvas.height) star.y = 0;
+    }
+    requestAnimationFrame(animateStars);
+  }
+
+  animateStars();
+
+  // HEART LINE ANIMATION
+  const heartCanvas = document.getElementById("heartCanvas");
+  const heartCtx = heartCanvas.getContext("2d");
+  heartCanvas.width = window.innerWidth;
+  heartCanvas.height = window.innerHeight;
+
+  let t = 0;
+  function drawHeart() {
+    heartCtx.clearRect(0, 0, heartCanvas.width, heartCanvas.height);
+    heartCtx.beginPath();
+    heartCtx.strokeStyle = 'red';
+    heartCtx.lineWidth = 2;
+
+    const scale = 10;
+    heartCtx.moveTo(heartCanvas.width / 2, heartCanvas.height / 2);
+
+    for (let i = 0; i < t; i += 0.05) {
+      let x = scale * 16 * Math.sin(i) ** 3;
+      let y = -scale * (13 * Math.cos(i) - 5 * Math.cos(2 * i) - 2 * Math.cos(3 * i) - Math.cos(4 * i));
+      heartCtx.lineTo(heartCanvas.width / 2 + x, heartCanvas.height / 2 + y);
+    }
+
+    heartCtx.stroke();
+
+    if (t < Math.PI * 2) {
+      t += 0.05;
+      requestAnimationFrame(drawHeart);
+    }
+  }
+
+  drawHeart();
+</script>
+
+</body>
+</html>

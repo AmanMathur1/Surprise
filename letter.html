@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Your Letter 💌</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      overflow: auto;
+      font-family: 'Segoe UI', 'Georgia', serif;
+      background: black;
+      height: 100%;
+      font-size: 18px;
+      line-height: 1.8;
+      color: white;
+    }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 0;
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      max-width: 750px;
+      margin: 60px auto;
+      background: rgba(255, 255, 255, 0.06);
+      padding: 45px 35px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(255, 105, 180, 0.2);
+      text-align: center;
+      backdrop-filter: blur(12px);
+    }
+
+    h2 {
+      color: #ff69b4;
+      font-size: 2.4rem;
+      margin-bottom: 20px;
+    }
+
+    .pic {
+      width: 200px;
+      height: 230px;
+      border-radius: 20px;
+      object-fit: cover;
+      margin: 15px 10px;
+      box-shadow: 0 0 20px rgba(255, 105, 180, 0.5),
+                  0 0 40px rgba(255, 105, 180, 0.3);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .pic:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 25px rgba(255, 105, 180, 0.7),
+                  0 0 50px rgba(255, 105, 180, 0.5);
+    }
+
+    p {
+      font-size: 1.15rem;
+      margin-bottom: 18px;
+      text-align: center;
+      max-width: 650px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    a.button {
+      display: inline-block;
+      margin-top: 30px;
+      background: #ff69b4;
+      color: white;
+      padding: 12px 25px;
+      border-radius: 30px;
+      text-decoration: none;
+      font-size: 1rem;
+      box-shadow: 0 4px 15px rgba(255, 105, 180, 0.4);
+      transition: 0.3s ease;
+    }
+
+    a.button:hover {
+      background: #ff85c1;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="heartCanvas"></canvas>
+
+  <div class="container">
+    <h2>To the Love of My Life ❤️</h2>
+
+    <!-- Attractive Images -->
+    <img src="C:\Users\Corpus London\Desktop\gf page\images\yna5.jpg" alt="photo1" class="pic" />
+    <img src="C:\Users\Corpus London\Desktop\gf page\images\yna6.jpg" alt="photo2" class="pic" />
+
+    <!-- Romantic Letter -->
+    <p>I don’t need a special day to tell you how much I love you, but I’m taking this one anyway — just for you 💍.</p>
+    <p>No matter the distance, your love 💍 lives in every beat of my heart 💓🌌<br>
+    You are not just mine 💍 — you are my reason, my calm, and my forever 💍 🕊️</p>
+    <img src="C:\Users\Corpus London\Desktop\gf page\images\yna7.jpg" alt="photo3" class="pic" />
+    <img src="C:\Users\Corpus London\Desktop\gf page\images\yna8.jpg" alt="photo4" class="pic" />
+    <p>I may mess up sometimes and make you angry 💔… but deep down, this man loves you more than words could ever show 🖤🥺<br>
+    Even in my flaws, my heart beats only for you — always has, always will 💘🌙.</p>
+    <p>One day, we’ll look back at this distance and smile — knowing we survived everything because love like ours doesn’t fade. It grows. Always.</p>
+    <p>Takot akong mawala ka, dahil ikaw lang ang gusto kong makasama habang buhay 👴🏻👵🏻… may tiwala, paniniwala, at pananampalataya ako sa’yo — ikaw lang ang huli at habang buhay ko ♾️❤️‍🔥<br>
+    (I used a translator; I hope it’s correct 😅)<br>
+    I hope you liked the GF's Day message… and I LOVE YOU SO MUCH WIFEY!</p>
+
+    <a href="C:\Users\Corpus London\Desktop\gf page\surprise.html" class="button">Surprise Here</a>
+  </div>
+
+  <!-- Falling Hearts Animation Script -->
+  <script>
+    const canvas = document.getElementById("heartCanvas");
+    const ctx = canvas.getContext("2d");
+
+    let width = canvas.width = window.innerWidth;
+    let height = canvas.height = window.innerHeight;
+
+    window.addEventListener("resize", () => {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    });
+
+    const hearts = [];
+    const mouse = { x: width / 2, y: height / 2 };
+
+    for (let i = 0; i < 60; i++) {
+      hearts.push({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        size: Math.random() * 15 + 5,
+        speedY: Math.random() * 1 + 0.5,
+        speedX: 0,
+      });
+    }
+
+    document.addEventListener("mousemove", (e) => {
+      mouse.x = e.clientX;
+      mouse.y = e.clientY;
+    });
+
+    function drawHeart(x, y, size) {
+      ctx.beginPath();
+      ctx.moveTo(x, y);
+      ctx.bezierCurveTo(x, y - size / 2, x - size, y - size / 2, x - size, y);
+      ctx.bezierCurveTo(x - size, y + size, x, y + size * 1.5, x, y + size * 2);
+      ctx.bezierCurveTo(x, y + size * 1.5, x + size, y + size, x + size, y);
+      ctx.bezierCurveTo(x + size, y - size / 2, x, y - size / 2, x, y);
+      ctx.fillStyle = "#ff69b4";
+      ctx.fill();
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, width, height);
+      for (let h of hearts) {
+        const dx = h.x - mouse.x;
+        const dy = h.y - mouse.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < 100) {
+          h.speedX = (dx / dist) * 1.5;
+        } else {
+          h.speedX *= 0.95;
+        }
+
+        h.y += h.speedY;
+        h.x += h.speedX;
+
+        if (h.y > height + 20) {
+          h.y = -20;
+          h.x = Math.random() * width;
+        }
+
+        drawHeart(h.x, h.y, h.size);
+      }
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+  </script>
+</body>
+</html>
